@@ -77,8 +77,8 @@ function check_product()
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^gzosp_") ; then
-        GZOSP_BUILD=$(echo -n $1 | sed -e 's/^gzosp_//g')
+    if (echo -n $1 | grep -q -e "^six_") ; then
+        GZOSP_BUILD=$(echo -n $1 | sed -e 's/^six_//g')
         export BUILD_NUMBER=$( (date +%s%N ; echo $GZOSP_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
     else
         GZOSP_BUILD=
@@ -575,7 +575,7 @@ function breakfast()
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
-            lunch gzosp_$target-$variant
+            lunch six_$target-$variant
         fi
     fi
     return $?
@@ -1691,7 +1691,7 @@ function installboot()
     sleep 1
     adb wait-for-online shell mount /system 2>&1 > /dev/null
     adb wait-for-online remount
-    if (adb shell getprop ro.gzosp.device | grep -q "$GZOSP_BUILD");
+    if (adb shell getprop ro.six.device | grep -q "$GZOSP_BUILD");
     then
         adb push $OUT/boot.img /cache/
         for i in $OUT/system/lib/modules/*;
@@ -1736,7 +1736,7 @@ function installrecovery()
     sleep 1
     adb wait-for-online shell mount /system 2>&1 > /dev/null
     adb wait-for-online remount
-    if (adb shell getprop ro.gzosp.device | grep -q "$GZOSP_BUILD");
+    if (adb shell getprop ro.six.device | grep -q "$GZOSP_BUILD");
     then
         adb push $OUT/recovery.img /cache/
         adb shell dd if=/cache/recovery.img of=$PARTITION
@@ -1762,7 +1762,7 @@ function dopush()
         echo "Device Found."
     fi
 
-    if (adb shell getprop ro.gzosp.device | grep -q "$GZOSP_BUILD") || [ "$FORCE_PUSH" == "true" ];
+    if (adb shell getprop ro.six.device | grep -q "$GZOSP_BUILD") || [ "$FORCE_PUSH" == "true" ];
     then
     # retrieve IP and PORT info if we're using a TCP connection
     TCPIPPORT=$(adb devices | egrep '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+:[0-9]+[^0-9]+' \

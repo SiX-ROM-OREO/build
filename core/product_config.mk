@@ -181,7 +181,7 @@ include $(BUILD_SYSTEM)/device.mk
 
 # A Gzosp build needs only the Gzosp product makefiles.
 ifneq ($(GZOSP_BUILD),)
-  all_product_configs := $(shell find device -path "*/$(GZOSP_BUILD)/gzosp.mk")
+  all_product_configs := $(shell find device -path "*/$(GZOSP_BUILD)/six.mk")
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
